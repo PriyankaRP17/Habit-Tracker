@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hive Stats - HabitHive</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-light fixed-top shadow-sm">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand fw-bold">HabitHive</a>
+                <div class="d-flex">
+                    <a class="nav-link" href="{{ url_for('dashboard') }}">Home</a>
+                    <a class="nav-link" href="{{ url_for('habit') }}">Habits</a>
+                    <a class="nav-link" href="{{ url_for('hive_stats') }}">Hive Stats</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hivestats mt-5 pt-5">
+            <h2 class="text-center mb-4 hive-progress" style="font-size: 30px; font-weight: bold;">Your Progress</h2>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-center" style="font-weight: bold;">Habits Completed Over Time</h5>
+                    <canvas id="completionChart" data-labels='{{ dates|tojson|safe }}' data-values='{{ completions|tojson|safe }}'></canvas>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-center" style="font-weight: bold;">Habit Frequency</h5>
+                    <canvas id="freqChart" data-labels='{{ habit_labels|tojson|safe }}' data-values='{{ habit_values|tojson|safe }}'></canvas>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <h5 class="text-center" style="font-weight: bold;">Preferred Time of Day</h5>
+                    <canvas id="timeChart" 
+                            data-labels='{{ time_labels|tojson|safe }}' 
+                            data-values='{{ time_values|tojson|safe }}'
+                            data-preferred='{{ preferred_times|tojson|safe }}'>
+                    </canvas>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <h5 class="mb-3" style="font-weight: bold;">Reminders</h5>
+                    <div id="reminderBox" class="alert alert-info" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>

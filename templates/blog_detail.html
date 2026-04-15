@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ article.title }}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <style>
+            body {
+                padding-top: 70px;
+            }
+            .article-container {
+                max-width: 800px;
+                margin: auto;
+            }
+            .article-title {
+                font-size: 2rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+            }
+            .article-meta {
+                color: #6c757d;
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+            .article-content p {
+                line-height: 1.8;
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            .related-articles {
+                margin-top: 3rem;
+            }
+            .related-articles h5 {
+                margin-bottom: 1rem;
+            }
+            .related-article {
+                margin-bottom: 0.5rem;
+            }
+            .back-btn {
+                margin-top: 2rem;
+            }
+            ul, ol {
+                margin-bottom: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark fixed-top bg-dark">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">HabitHive</a>
+                <div class="d-flex">
+                    <a class="nav-link text-white" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-link text-white" href="{{ url_for('habit') }}">Habits</a>
+                    <a class="nav-link text-white" href="{{ url_for('hive_stats') }}">Hive Stats</a>
+                    <a class="nav-link text-white" href="{{ url_for('login') }}">Login</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="article-container py-5">
+            <h1 class="article-title" style="margin-top: 270px;">{{ article.title }}</h1>
+            <div class="article-meta">By HabitHive Team</div>
+            <div class="article-content">
+                {% set lines = article.content.split('\n') %}
+                {% for line in lines %}
+                    {% if line.strip().startswith(('1.', '2.', '3.', '4.', '5.')) %}
+                        {% if not loop.first %}</ol>{% endif %}
+                        <ol start="{{ loop.index }}">
+                            <li>{{ line.split('.', 1)[1] | trim }}</li>
+                        </ol>
+                    {% elif line.strip().startswith(('-', '*')) %}
+                        <ul>
+                            <li>{{ line[1:] | trim }}</li>
+                        </ul>
+                    {% else %}
+                        <p>{{ line }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('home') }}" class="btn btn-secondary back-btn">Back to Home</a>
+
+            {% if related_articles %}
+            <div class="related-articles">
+                <h5>Related Articles</h5>
+                {% for related in related_articles %}
+                    <div class="related-article">
+                        <a href="{{ url_for('blog_detail', id=related.id) }}">{{ related.title }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

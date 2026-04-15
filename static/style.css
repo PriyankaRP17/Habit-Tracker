@@ -1,0 +1,162 @@
+nav {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(6px);               
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 2rem;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link {
+    margin: 0 80px; 
+    font-weight: bold;
+    transition: color 0.3s;
+    color: white !important;
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    color: red !important;
+}
+
+.navbar-brand.fw-bold {
+    color: red !important;
+    margin: 0 50px;
+    font-size: 20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+}
+
+h3 {
+    margin-bottom: 40px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.add-habit{
+    margin-top: 922px;
+}
+
+.hive-progress{
+    margin-top: 700px;
+}
+
+.form-container {
+    background-image: url("https://media.istockphoto.com/id/1179771938/photo/summer-holiday-concept.jpg?s=612x612&w=0&k=20&c=yynNT1p0tOTL05LZDbpNNmqBb9YTwSUkXGtvdwtsvIo=");
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    font-family:"Josefin Sans", sans-serif;
+    font-size: 20px;
+    margin-top: 60px;
+}
+
+.body-container {
+    background: url("https://images.unsplash.com/photo-1598367429525-221f46fc48d9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDQ2fHx8ZW58MHx8fHx8") no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+#habit-cont {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 30px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 20px;
+}
+
+.table-rounded {
+    border-collapse: separate;
+    border-radius: 15px;       
+    overflow: hidden;          
+}
+
+.hivestats{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 30px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 20px;
+    width: 1250px;
+}
+
+.hero-section {
+    background: url("https://media.istockphoto.com/id/1127545364/photo/sunset-landscape-with-plain-and-forest.jpg?s=612x612&w=0&k=20&c=FjNvv37oQkwcFHgn_viDPET-a6vjVq6rqINmro1rXgE=") no-repeat center center;
+    background-size: cover;   
+    height: 100vh;
+    width: 100vw;
+    margin-top: 900px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+section.py-5 {
+    background: #ffffff;
+}
+
+.col-md-4:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s;
+}
+
+h3 { 
+    font-size: 30px; 
+    font-weight: bold; 
+    margin-bottom: 40px; 
+}
+
+.card.p-3{
+    background-color:rgb(240, 236, 236);
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto; 
+}
+
+html {
+    scroll-behavior: smooth;
+}

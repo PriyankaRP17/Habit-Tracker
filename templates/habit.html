@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Habits</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <nav class="navbar navbar-light fixed-top shadow-sm">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand fw-bold">HabitHive</a>
+                <div class="d-flex">
+                    <a class="nav-link" href="{{ url_for('dashboard') }}">Home</a>
+                    <a class="nav-link" href="{{ url_for('habit') }}">Habits</a>
+                    <a class="nav-link" href="{{ url_for('hive_stats') }}">Hive Stats</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mt-5 pt-5", id="habit-cont">
+            <h3 class="text-center mb-4 add-habit">Add a Habit</h3>
+
+            {% if recommended_habits %}
+            <div class="mb-3">
+                <h5>Recommended Habits for You:</h5>
+                <ul>
+                    {% for habit in recommended_habits %}
+                    <li class="recommended-habit" style="cursor:pointer;">{{ habit }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label class="form-label">Habit Name: </label>
+                    {{ form.habit_name(class="form-control", placeholder="Enter Habit Name") }}
+                    <h5 class="text-center my-4">(OR)</h5>
+                    <label class="form-label">Choose a habit: </label>
+                    {{ form.habit_choice(class="form-select") }}
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label for="weight" class="form-label">Weight (kg):</label>
+                    {{ form.weight(class="form-control", id="weight", placeholder="Enter your weight (optional)") }}
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label for="height" class="form-label">Height (cm):</label>
+                    {{ form.height(class="form-control", id="height", placeholder="Enter your height (optional)") }}
+                </div>
+                
+                <div class="mb-3 text-start">
+                    <label for="age" class="form-label">Age:</label>
+                    {{ form.age(class="form-control", id="age", placeholder="Enter your age (optional)") }}
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label">Gender:</label><br>
+                    {% for subfield in form.gender %}
+                        <div class="form-check form-check-inline">
+                            {{ subfield(class="form-check-input") }}
+                            <label class="form-check-label">{{ subfield.label.text }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Frequency (days)</label>
+                    {{ form.frequency(class="form-control", placeholder="eg: 1...") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Duration (Hours)</label>
+                    {{ form.duration(class="form-control", placeholder="eg: 1 hour") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Preferred Time: </label>
+                    {{ form.preferred_time(class="form-select") }}
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    {{ form.submit(class="btn btn-primary px-4") }}
+                </div>
+            </form>
+
+            <hr class="my-5">
+
+            <h4 class="text-center mb-3" style="font-weight: bold;">Your Habits</h4>
+            <table class="table table-bordered text-center table-rounded">
+                <thead>
+                    <tr>
+                        <th>Habit</th>
+                        <th>Frequency (days)</th>
+                        <th>Duration (hrs)</th>
+                        <th>Preferred Time</th>
+                        <th>Weight (kg)</th>
+                        <th>Height (cm)</th>
+                        <th>Age</th>
+                        <th>Actions</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in habits %}
+                    <tr>
+                        <td>{{ h.habit_name }}</td>
+                        <td>{{ h.frequency }}</td>
+                        <td>{{ h.duration }}</td>
+                        <td>{{ h.preferred_time }}</td>
+                        <td>{{ current_user.weight or '-' }}</td>
+                        <td>{{ current_user.height or '-' }}</td>
+                        <td>{{ current_user.age or '-' }}</td>
+                        <td>{{ current_user.gender or '-' }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm complete-btn" data-id="{{ h.id }}">
+                                Mark Completed
+                            </button>
+                            
+                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="{{ h.id }}">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <script>
+            document.querySelectorAll(".complete-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const habitId = btn.dataset.id;
+                    fetch(`/complete-habit/${habitId}`, { method: "POST" })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            location.reload();  
+                        })
+                        .catch(err => console.error(err));
+                });
+            });
+
+            document.querySelectorAll(".delete-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const habitId = btn.dataset.id;
+                    if (confirm("Are you sure you want to delete this habit?")) {
+                        fetch(`/delete-habit/${habitId}`, { method: "DELETE" })
+                            .then(res => res.json())
+                            .then(data => {
+                                alert(data.message);
+                                location.reload();
+                            })
+                            .catch(err => console.error(err));
+                    }
+                });
+            });
+
+            document.querySelectorAll(".recommended-habit").forEach(item => {
+                item.addEventListener("click", () => {
+                    const habitNameField = document.getElementById("habit_name") || document.querySelector('input[name="habit_name"]');
+                    habitNameField.value = item.innerText;
+                });
+            });
+        </script>
+    </body>
+</html>
