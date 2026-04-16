@@ -61,6 +61,9 @@ Most habit trackers treat all users the same. HabitHive takes a different approa
 ### Habit_Stats Page
 ![Habit_Stats](Output_Screenshots/Habit_Stats.png)
 
+## Live Demo
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?logo=render)](https://habit-tracker-96vr.onrender.com)
+
 ## Project Structure
 
 ```
@@ -86,10 +89,10 @@ Habit Tracker/
 |       ├── login-img.jpg
 |       └── sunset.jpg
 |
-└──├── .env
-   ├── .gitignore
-   ├── README.md
-   └── requirements.txt 
+├── .env
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
 ---
@@ -220,11 +223,10 @@ Open **http://127.0.0.1:5000** in your browser. The database tables are auto-cre
 ---
 
 ## What I'd Improve Next
-- [x] Deployed to Render
-- [ ] Add streak tracking — count consecutive days a habit was completed
+- [ ] Add streak tracking
 - [ ] Write pytest unit tests for BMI logic and completion duplicate guard
-- [ ] Dockerize with `docker-compose` for portable setup
-- [ ] Deploy to AWS / Render
+- [ ] Dockerize with docker-compose for portable setup
+- [ ] Deploy to AWS
 
 ---
 
