@@ -223,6 +223,8 @@ Open **http://127.0.0.1:5000** in your browser. The database tables are auto-cre
 ---
 
 ## What I'd Improve Next
+- [x] Deployed to Render
+- [x] Migrated SQL Server to PostgreSQL for production
 - [ ] Add streak tracking
 - [ ] Write pytest unit tests for BMI logic and completion duplicate guard
 - [ ] Dockerize with docker-compose for portable setup
